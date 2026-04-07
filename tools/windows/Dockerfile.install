@@ -46,7 +46,7 @@ SHELL ["cmd", "/S", "/C"]
 
 RUN "C:\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64 -vcvars_ver=14.34 && \
     set DISTUTILS_USE_SDK=1 && \
-    python setup.py develop
+    pip install --no-build-isolation -e .
 
 # fix for paging memory issue on CI machines
 #   see: https://gist.github.com/cobryan05/7d1fe28dd370e110a372c4d268dcb2e5

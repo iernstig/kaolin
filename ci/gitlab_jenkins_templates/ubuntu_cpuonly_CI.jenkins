@@ -89,7 +89,7 @@ spec:
             targetImage.inside() {
               sh """
               ls .
-              python setup.py bdist_wheel --dist-dir .
+              pip wheel --no-build-isolation --no-deps --wheel-dir . .
               """
             }
             pythonVerTag = pythonVer.split('\\.').join('')

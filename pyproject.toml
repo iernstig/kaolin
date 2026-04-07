@@ -1,0 +1,56 @@
+[build-system]
+requires = [
+	"setuptools<75.9",
+	"wheel",
+	"numpy",
+	"pybind11",
+	"torch>=2.3.0,<=2.10.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kaolin"
+dynamic = ["version"]
+description = "Kaolin: A PyTorch library for accelerating 3D deep learning research"
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "Apache License 2.0" }
+authors = [
+	{ name = "NVIDIA" },
+]
+dependencies = [
+	"torch>=2.3.0,<=2.10.0",
+	"usd-core",
+	"numpy",
+	"pybind11",
+	"Pillow>=8.0.0",
+	"tqdm>=4.51.0",
+	"scipy",
+	"pygltflib",
+	"warp-lang",
+	"wget",
+	"ipython; python_version >= '3.9'",
+	"ipython < 8.13; python_version < '3.9'",
+	"ipycanvas",
+	"ipyevents",
+	"jupyter_client<8",
+	"flask",
+	"tornado",
+	"comm>=0.1.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/NVIDIAGameWorks/kaolin"
+
+[project.scripts]
+kaolin-dash3d = "kaolin.experimental.dash3d.run:run_main"
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
+[tool.setuptools.packages.find]
+exclude = ["docs", "tests", "examples"]
+
+[tool.setuptools.dynamic]
+version = { file = ["version.txt"] }

@@ -6,15 +6,16 @@
 # IGNORE_TORCH_VER
 #   ignore version requirements for PyTorch
 
-import os
-from setuptools import setup, find_packages
-import importlib
-from pkg_resources import parse_version
-import warnings
-import logging
 import glob
-import sys
+import importlib
+import logging
+import os
 import subprocess  # Added import
+import sys
+import warnings
+
+from pkg_resources import parse_version
+from setuptools import find_packages, setup
 
 # Define version constraints
 TORCH_MIN_VER = '2.3.0'
@@ -54,7 +55,12 @@ if numpy_spec is None:
     )
 
 import numpy
-from torch.utils.cpp_extension import BuildExtension, CppExtension, CUDAExtension, CUDA_HOME
+from torch.utils.cpp_extension import (
+    CUDA_HOME,
+    BuildExtension,
+    CppExtension,
+    CUDAExtension,
+)
 
 # Setup logging and working directory
 cwd = os.path.dirname(os.path.abspath(__file__))
@@ -104,23 +110,6 @@ elif not torch.cuda.is_available():
         "Set FORCE_CUDA=1 for GPU cross-compilation."
     )
 
-# Package metadata
-PACKAGE_NAME = 'kaolin'
-DESCRIPTION = 'Kaolin: A PyTorch library for accelerating 3D deep learning research'
-URL = 'https://github.com/NVIDIAGameWorks/kaolin'
-AUTHOR = 'NVIDIA'
-LICENSE = 'Apache License 2.0'
-LONG_DESCRIPTION = """
-Kaolin is a PyTorch library aiming to accelerate 3D deep learning research. Kaolin provides efficient implementations
-of differentiable 3D modules for use in deep learning systems. With functionality to load and preprocess several popular
-3D datasets, and native functions to manipulate meshes, pointclouds, signed distance functions, and voxel grids, Kaolin
-mitigates the need to write wasteful boilerplate code. Kaolin packages together several differentiable graphics modules
-including rendering, lighting, shading, and view warping. Kaolin also supports an array of loss functions and evaluation
-metrics for seamless evaluation and provides visualization functionality to render the 3D results. Importantly, we curate
-a comprehensive model zoo comprising many state-of-the-art 3D deep learning architectures, to serve as a starting point
-for future research endeavours.
-"""
-
 # Version handling
 version_txt = os.path.join(cwd, 'version.txt')
 with open(version_txt) as f:
@@ -133,19 +122,6 @@ def write_version_file():
         f.write(f"__version__ = '{version}'\n")
 
 write_version_file()
-
-def get_requirements():
-    """Read runtime dependencies from requirements files."""
-    requirements = []
-    with open(os.path.join(cwd, 'tools', 'viz_requirements.txt'), 'r') as f:
-        requirements.extend(line.strip() for line in f)
-    with open(os.path.join(cwd, 'tools', 'requirements.txt'), 'r') as f:
-        requirements.extend(line.strip() for line in f)
-    return requirements
-
-def get_scripts():
-    """Return list of scripts to install."""
-    return ['kaolin/experimental/dash3d/kaolin-dash3d']
 
 def get_extensions():
     """Define C++ and CUDA extensions."""
@@ -196,18 +172,8 @@ def get_include_dirs():
 
 if __name__ == '__main__':
     setup(
-        name=PACKAGE_NAME,
-        version=version,
-        author=AUTHOR,
-        description=DESCRIPTION,
-        url=URL,
-        long_description=LONG_DESCRIPTION,
-        license=LICENSE,
-        python_requires='~=3.7',
         packages=find_packages(exclude=('docs', 'tests', 'examples')),
-        scripts=get_scripts(),
         include_package_data=True,
-        install_requires=get_requirements(),
         zip_safe=False,
         ext_modules=get_extensions(),
         cmdclass={'build_ext': BuildExtension.with_options(no_python_abi_suffix=True)}

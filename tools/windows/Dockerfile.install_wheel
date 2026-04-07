@@ -46,5 +46,5 @@ RUN "C:\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64 -vcvars_ver=14.34 && \
     set DISTUTILS_USE_SDK=1 && \
     set FORCE_CUDA=1 && \
     set CUDAHOSTCXX=c:\buildtools\vc\tools\msvc\14.34.31933\bin\hostx64\x64\cl.exe && \
-    python setup.py bdist_wheel --dist-dir . && \
+    pip wheel --no-build-isolation --no-deps --wheel-dir . . && \
     for %f in (kaolin-*.whl) do pip install %f

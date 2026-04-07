@@ -95,7 +95,7 @@ spec:
                   sh """
                   ls .
                   export MAX_JOBS=1
-                  python setup.py bdist_wheel --dist-dir .
+                  pip wheel --no-build-isolation --no-deps --wheel-dir . .
                   """
                 }
                 pythonVerTag = pythonVer.split('\\.').join('')

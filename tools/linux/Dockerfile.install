@@ -74,4 +74,4 @@ RUN if [ "$FORCE_CUDA" -eq "1" ]; then \
     export MAX_JOBS=1 && \
     pip install --no-build-isolation --break-system-packages .; fi
 
-RUN export MAX_JOBS=1 && python setup.py develop
+RUN export MAX_JOBS=1 && pip install --no-build-isolation -e .

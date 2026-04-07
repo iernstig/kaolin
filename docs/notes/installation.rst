@@ -132,7 +132,7 @@ Here is how to install the latest Pytorch version supported by Kaolin for cuda 1
 
 .. code-block:: bash
 
-    $ python setup.py develop
+    $ pip install -e .
 
 .. Note::
     Kaolin can be installed without GPU, however, CPU support is limited and many CUDA-only functions will be missing.
